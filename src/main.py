@@ -39,10 +39,22 @@ def unique_record(df, variable_name):
             .distinct()\
             .count()
     print("The number of unique records for", variable_name,  "is :", total_unique)
+	
+# Function to find top 3 records in a column
+def top_three(df, column_name):
+    global total_top3, manufacturer_to_list
+    total_top3 = df\
+                .select(column_name)\
+                .groupBy(column_name)\
+                .count()\
+                .orderBy(desc("count"))\
+                .limit(3)
+    total_top3.show()
+    manufacturer_to_list = total_top3.toPandas()[column_name].values.T.tolist()
     
 # Calling Functions
 create_df(eventsDF, "data.*")
 unique_record(dataDF, "user_id")
-
+top_three(dataDF, "manufacturer")
 
 

@@ -6,6 +6,6 @@ Analytics Challenge
 - Python
 - PySpark
 
-## How to run
+## How to run (Windows)
 
-- zcat events.json.gz | ./
+- python main.py data.json
