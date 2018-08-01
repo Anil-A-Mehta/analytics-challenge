@@ -28,27 +28,21 @@ eventsDF.printSchema()
 
 # Function to select particular data field from df 
 def create_df(df, field):
-    
-	global dataDF     
-    
-	dataDF = df.select(field)
+   global dataDF     
+   dataDF = df.select(field)
 
 # Function to find unqiue number of records in a column
 def unique_record(df, variable_name):
-    
-	global total_unique 
-    
-	total_unique = df\
+   global total_unique 
+   total_unique = df\
             .select(variable_name)\
             .distinct()\
             .count()
-    print("The number of unique records for", variable_name,  "is :", total_unique)
+   print("The number of unique records for", variable_name,  "is :", total_unique)
 	
 # Function to find top 3 records in a column
 def top_three(df, column_name):
-
     global total_top3, manufacturer_to_list
-
     total_top3 = df\
                 .select(column_name)\
                 .groupBy(column_name)\
@@ -60,9 +54,7 @@ def top_three(df, column_name):
 	
 # Function to find min, max and mean of a column)
 def min_max_mean_record(df, column_name1, column_name2):
-    
     global session_id_num, session_output, to_json_session, session_parsed
-    
     session_id_num = df\
         .select(column_name1, column_name2)\
         .distinct()
