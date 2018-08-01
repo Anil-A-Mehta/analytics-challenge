@@ -51,10 +51,46 @@ def top_three(df, column_name):
                 .limit(3)
     total_top3.show()
     manufacturer_to_list = total_top3.toPandas()[column_name].values.T.tolist()
+	
+# Function to find min, max and mean of a column)
+def min_max_mean_record(df, column_name1, column_name2):
+    
+    global session_id_num, session_output, to_json_session, session_parsed
+    
+    session_id_num = df\
+        .select(column_name1, column_name2)\
+        .distinct()
+    
+    session_output = session_id_num\
+        .select(mean(column_name2), min(column_name2), max(column_name2))\
+        .withColumnRenamed("avg(" + column_name2 + ")", "mean")\
+        .withColumnRenamed("min(" + column_name2 + ")", "min")\
+        .withColumnRenamed("max(" + column_name2 + ")", "max")
+        
+    session_output.show()
+    to_json_session = session_output.toJSON().collect()
+    to_json_session = ''.join(map(str,to_json_session))
+    session_parsed = json.loads(to_json_session)
+	
+# Function for final output
+def output(unique, top3, sessions):
+
+    global d_user_id, d_manufacturers, d_sessions, d_final
+    
+    d_user_id = dict([("active_users", unique)])
+    d_manufacturers = dict([("manufacturers", top3)])
+    d_sessions = dict([("sessions", sessions)])
+    d_user_id.update(d_manufacturers)
+    d_user_id.update(d_sessions)
+    d_final = dict(d_user_id)
+    print(json.dumps(d_final, indent = 2))
     
 # Calling Functions
 create_df(eventsDF, "data.*")
 unique_record(dataDF, "user_id")
 top_three(dataDF, "manufacturer")
+min_max_mean_record(dataDF, "session_id", "session_num")
+output(total_unique, manufacturer_to_list, session_parsed)
+
 
 
