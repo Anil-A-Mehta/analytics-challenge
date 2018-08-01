@@ -28,13 +28,17 @@ eventsDF.printSchema()
 
 # Function to select particular data field from df 
 def create_df(df, field):
-    global dataDF     
-    dataDF = df.select(field)
+    
+	global dataDF     
+    
+	dataDF = df.select(field)
 
 # Function to find unqiue number of records in a column
 def unique_record(df, variable_name):
-    global total_unique 
-    total_unique = df\
+    
+	global total_unique 
+    
+	total_unique = df\
             .select(variable_name)\
             .distinct()\
             .count()
@@ -42,7 +46,9 @@ def unique_record(df, variable_name):
 	
 # Function to find top 3 records in a column
 def top_three(df, column_name):
+
     global total_top3, manufacturer_to_list
+
     total_top3 = df\
                 .select(column_name)\
                 .groupBy(column_name)\
