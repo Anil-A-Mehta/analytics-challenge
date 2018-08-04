@@ -8,4 +8,6 @@ Analytics Challenge
 
 ## How to run (Windows)
 
-- python main.py data.json
+After migrating to the source directory enter command:
+
+- type data.json | python main.py
