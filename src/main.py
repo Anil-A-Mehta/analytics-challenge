@@ -15,13 +15,19 @@ sc = SparkContext(conf = conf)
 spark = SparkSession(sc)
 
 # path of the dataset
-path = "C:/game-analytics/data.json"
+#path = "C:/game-analytics/data.json"
 
 # Loading the dataset
-eventsDF = spark.read.json(sys.argv[1])
+#eventsDF = spark.read.json(sys.argv[1])
 #eventsDF = spark.read.json(path)
 
 # Printing the schema
+#eventsDF.printSchema()
+
+# Reading dataset from command line
+rdd = sc.parallelize(sys.stdin.readlines(), 20)
+eventsDF = spark.read.json(rdd)
+
 eventsDF.printSchema()
 
 # Creating Functions
@@ -89,6 +95,3 @@ unique_record(dataDF, "user_id")
 top_three(dataDF, "manufacturer")
 min_max_mean_record(dataDF, "session_id", "session_num")
 output(total_unique, manufacturer_to_list, session_parsed)
-
-
-
