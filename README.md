@@ -6,8 +6,8 @@ Analytics Challenge
 - Python
 - PySpark
 
-## How to run (Windows)
+## How to run
 
 After migrating to the source directory enter command:
 
-- type data.json | python main.py
+- python main.py data.json
